@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>memo/index.html</title>
+</head>
+<body>
+    <link rel="stylesheet" href="/static/memo/style.css">
+    <div class="memo-container">
+        <div class="memo-title">한줄 메모장</div>
+        <form class="memo-form" action="/result" method="post">
+            <input class="memo-input" type="text" name="author" placeholder="작성자" required>
+            <input class="memo-input" type="text" name="content" placeholder="메모 내용을 입력하세요" required>
+            <button class="memo-button" type="submit">글쓰기</button>
+        </form>
+    </div>
+</body>
+</html>

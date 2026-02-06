@@ -1,0 +1,27 @@
+# FastAPI 핵심 프레임워크
+fastapi==0.101.0
+
+# ASGI 서버 (개발용, standard 옵션 포함)
+uvicorn[standard]==0.23.2
+
+# 환경 변수 관리
+python-dotenv==1.1.1
+
+# 데이터 검증 및 타입 체크 (FastAPI 설치 시 포함)
+pydantic==2.4.0
+
+# 외부 API 호출
+requests==2.31.0
+
+# 데이터베이스 연동 (필요시)
+SQLAlchemy==2.0.23
+mysqlclient==2.3.1        # MySQL 사용 시
+psycopg2-binary==2.9.9    # PostgreSQL 사용 시
+
+# Jupyter Notebook (선택, 실습용)
+jupyter==1.0.0
+jinja2==3.1.4
+
+pytest==9.0.2
+httpx==0.28.1
+python-multipart==0.0.22

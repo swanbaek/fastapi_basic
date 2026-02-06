@@ -126,7 +126,10 @@ def test_query_string():
 ### 4.3. 오류 처리 
 
 - FastAPI에서는 HTTPException을 활용해 에러 응답을 쉽게 처리할 수 있습니다.
-- status_code, detail 등 다양한 정보 제공 가능
+- HTTPException 클래스는 다음 세 개의 인수를 받는다.
+    * **status_code** : 예외 처리 시 반환할 상태 코드
+    *  **detail** : 클라이언트에게 전달한 메시지
+    *  **headers** : 헤더를 요구하는 응답을 위한 선택적 인수
 - 예시:
 	```python
 	from fastapi import HTTPException

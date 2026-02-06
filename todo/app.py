@@ -1,15 +1,22 @@
-from fastapi import APIRouter, Path, Query
-from todo.model import Todo, TodoItem
+from fastapi import APIRouter, HTTPException, Path, Query
+from todo.model import Todo, TodoItem, TodoItems
 
 todo_router = APIRouter()
 
 todo_list=[{"id":1, "item":"할 일 1"}, {"id":2, "item":"할 일 2"}]
+#1. 기본 응답 모델 (딕셔너리)
+# @todo_router.get("/todos")
+# async def get_todos()->dict:
+#     return {"todos": todo_list}
 
-@todo_router.get("/todos")
+
+#2.응답 모델 지정 (TodoItems 모델)
+@todo_router.get("/todos", response_model=TodoItems)
 async def get_todos()->dict:
-    return {"todos": todo_list}
+    # return {"todos": todo_list} #<===이리 하면 500에러 남
+    return TodoItems(todos=[TodoItem(item=todo['item']) for todo in todo_list])
 
-@todo_router.post("/todos")
+@todo_router.post("/todos", status_code=201) #상태코드 201 Created: 요청 성공 + 신규 생성됨 의미
 async def create_todo(todo: Todo)->dict:
     todo_list.append(todo)
     return {"message": "할 일이 추가되었습니다.", "id": todo.id}
@@ -37,7 +44,8 @@ async def get_todo(id: int)->dict:
     for todo in todo_list:
         if todo['id']==id:
             return {'todo':todo}
-    return {'message':f'{id}번 할 일을 찾을 수 없습니다.'}
+    # return {'message':f'{id}번 할 일을 찾을 수 없습니다.'}
+    raise HTTPException(status_code=404, detail=f'{id}번 할 일을 찾을 수 없습니다.')
 
 @todo_router.put("/todos/{id}")
 async def update_todo(todo_data: TodoItem, id: int=Path(..., title="The ID of to todo to be updated"))->dict:
@@ -47,7 +55,8 @@ async def update_todo(todo_data: TodoItem, id: int=Path(..., title="The ID of to
         if todo['id']==id:
             todo['item']=todo_data.item
             return {'message':f'{id}번 할 일이 수정되었습니다.'}
-    return {'message':f'{id}번 할 일을 찾을 수 없습니다.'}
+    # return {'message':f'{id}번 할 일을 찾을 수 없습니다.'}
+    raise HTTPException(status_code=404, detail=f'{id}번 할 일을 찾을 수 없습니다.')
 
 @todo_router.delete("/todos/{id}")
 async def delete_todo(id: int)->dict:
@@ -55,7 +64,8 @@ async def delete_todo(id: int)->dict:
         if todo['id']==id:
             todo_list.remove(todo)
             return {'message':f'{id}번 할 일이 삭제되었습니다.'}
-    return {'message':f'{id}번 할 일을 찾을 수 없습니다.'}
+    # return {'message':f'{id}번 할 일을 찾을 수 없습니다.'}
+    raise HTTPException(status_code=404, detail=f'{id}번 할 일을 찾을 수 없습니다.')
 
 @todo_router.delete("/todos")
 async def delete_all_todos()->dict:

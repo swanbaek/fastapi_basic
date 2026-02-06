@@ -34,12 +34,23 @@ class Todo(BaseModel):
             }
         }
     }
-# '''
-# {
-# "id": 1,
-# "item": {
-#     "item": "Nested models",
-#     "status": "completed"
-#     }
-# }
-# '''
+# 응답 모델에도 pydantic 모델을 사용할 수 있음
+# FastAPI에서는 요청(request) 모델과 응답(response) 모델을 다르게 쓰는 게 일반적
+class TodoItems(BaseModel):
+    todos: list[TodoItem]
+
+    model_config = {
+        "json_schema_extra" : {
+            "example": {
+                "todos": [
+                    {
+                    "item": "Example schema 1!"
+                    },
+                    {
+                    "item": "Example schema 2!"
+                    }
+                ]
+            } 
+        }
+    }
+

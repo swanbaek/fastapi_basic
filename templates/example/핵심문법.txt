@@ -1,0 +1,66 @@
+# Jinja2 핵심 문법 정리
+
+1. 변수 출력
+  {{ 변수명 }}
+  예: {{ name }}
+
+2. 조건문
+  {% if 조건 %} ... {% elif 조건 %} ... {% else %} ... {% endif %}
+  예:
+  {% if score >= 60 %}
+    합격
+  {% else %}
+    불합격
+  {% endif %}
+
+3. 반복문
+  {% for item in 리스트 %} ... {% endfor %}
+  예:
+  <ul>
+    {% for fruit in fruits %}
+      <li>{{ fruit }}</li>
+    {% endfor %}
+  </ul>
+
+4. 필터
+  {{ 변수|필터명 }}
+  예: {{ name|upper }}, {{ items|length }}
+
+5. 템플릿 상속
+  - 부모 템플릿: block 정의
+    {% block 블록명 %} ... {% endblock %}
+  - 자식 템플릿: extends, block 오버라이드
+    {% extends "base.html" %}
+    {% block content %} ... {% endblock %}
+    
+    [실습 예제 구조]
+    testWeb1/
+        ├─ main.py
+        ├─ templates/example
+        │           ├─ base.html
+        │           ├─ home.html
+        │           ├─ about.html
+        │           └─ nav.html
+        └─ .venv/
+
+
+6. 매크로
+  {% macro 함수명(인자) %} ... {% endmacro %}
+  {{ 함수명(값) }}
+
+7. 주석
+  {# 주석 내용 #}
+
+8. include
+  {% include "파일명.html" %}
+
+9. set (변수 선언)
+  {% set 변수 = 값 %}
+
+# 자주 쓰는 필터 예시
+- upper, lower, title, length, join, replace, safe
+
+# 기타
+- 중첩 for/if 가능
+- 딕셔너리: {{ user["name"] }} 또는 {{ user.name }}
+- HTML 이스케이프 방지: {{ html|safe }}

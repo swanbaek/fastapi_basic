@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>basic2</title>
+    <style>
+        .success {
+            color: green;
+        }
+        .fail {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>안녕하세요? {{name}}님~</h1>
+    <h2>당신의 점수는 {{score}} 입니다</h2>
+    {%
+        if score >=70
+    %}
+        <h3 class="success">축하합니다 합격입니다~</h3>
+    {%
+    else
+    %}  
+        <h3 class="fail">안타깝지만 불합격입니다 ㅜㅜ</h3>      
+    {%
+    endif 
+    %}        
+</body>
+</html>

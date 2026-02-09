@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>basic2</title>
+    <style>
+        body{
+            padding: 3em;
+            text-align: center;
+        }
+        body *{
+            font-family: 'Arial', sans-serif;
+        }
+        .title {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title"> 필터 적용</h1>
+    <h3>원본 텍스트 : {{text}}</h3>
+    <h3>원본 대문자로: {{text|upper}}</h3>
+    <h3>원본 소문자로: {{text|lower}}</h3>
+    <h3>원본 단어 첫글자만 대문자로: {{text|title}}</h3>
+    <h3>이스케이프 필터: {{"<h2>Escape Filter Apply</h2>"}} </h3>
+    <hr color="red">
+    <h3>
+    {% for item in items%}
+        {{item}}
+    {% endfor%}
+    </h3>
+    <h3>items의 크기: {{items|length}}</h3>    
+    <h3>num1: {{num1}}, num2: {{num2}}</h3>
+    <h3>num1 소수점 둘째자리까지: {{num1|round(2)}}</h3>
+    <h3>num2 천단위 콤마: {{"{:,}".format(num2)}}</h3>
+    <h3>num2 천단위 콤마(커스텀 필터): {{num2|comma}}</h3>
+    {# 사용자 정의 필터. format 적용함수 만들고 필터 등록 example_app.py에서 #}
+    <h3>num1 + num2 = {{(num1+num2)|round(2)}} </h3>
+    <hr color="blue">
+    <h3>변환 필터: {{3.141592|int}},  {{51|float}}</h3>
+    <h3>병합 필터: {{['눈이','부시게','푸르른 날은']|join(' ')}} </h3>
+</body>
+</html>

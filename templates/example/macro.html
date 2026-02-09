@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jinja2 매크로</title>
+    <style>
+        body{
+            padding: 3em;
+            
+        }
+    </style>
+</head>
+<body>
+{% macro fruit_list(fruits) %}
+    <ul>
+    {% for fruit in fruits %}
+        <li>{{ fruit }}</li>
+    {% endfor %}
+    </ul>
+{% endmacro %}
+
+<h2>과일 목록</h2>
+{{ fruit_list(fruits) }}
+<hr>
+<p>
+    <ul>
+    <li>Jinja의 매크로는 하나의 함수로, HTML 문자열을 반환한다.</li> 
+    <li>매크로 사용의 주요 목적은 하나의 함수를 사용해 반복적으로 작성하는 코드를 줄이는 것이다. </li>
+    </ul>
+</p>
+<hr color="red">
+{#macro 정의#}
+{% macro input(name, value='', type='text', size=20) %}
+    <div class="form">
+        <label for="{{name}}">{{name.capitalize()}}:</label>
+        <input type="{{type}}" name="{{name}}" id="{{name}}" value="{{value|escape}}" size="{{size}}">
+    </div>
+{% endmacro %}
+
+{#macro 적용#}
+{{input('username')}}
+{{input('email')}}
+{{input('password', type='password')}}
+</body>
+</html>

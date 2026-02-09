@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}기본 제목{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        header, footer { background: #eee; padding: 1em; text-align: center; }
+        main { margin-top: 20px; width:80%; margin:auto;max-width: 1024px;height:auto; min-height:70vh; }
+    </style>
+</head>
+<body>
+
+    <!-- 공통 헤더/네비게이션 -->
+    <header>
+        <h1>My FastAPI Site</h1>
+        {% include "nav.html" %}
+    </header>
+
+    <!-- 페이지별 내용 -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 공통 푸터 -->
+    <footer>
+        &copy; 2026 FastAPI
+    </footer>
+</body>
+</html>

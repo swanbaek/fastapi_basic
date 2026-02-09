@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from todo.app import todo_router
+from jinja_ex.example_app import app as jinja2_app
 
 
 # venv 안에서 FastAPI 설치
@@ -34,3 +35,5 @@ async def post_memo(request: Request, content: str = Form(...)):
     return templates.TemplateResponse("memo/result.html", {"request": request, "content": content})
 
 app.include_router(todo_router)
+
+app.mount("/jinja_ex", jinja2_app)

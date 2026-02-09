@@ -90,14 +90,44 @@ def test_query_string():
 ```
 
 기타 CRUD 테스트 코드도 포함되어 있음.
+# 4. 템플릿 엔진(Jinja2) 소개 및 실습
 
-# 4. 응답 모델과 오류 처리
+FastAPI에서 Jinja2 템플릿 엔진을 활용하면 동적 HTML 페이지를 쉽게 만들 수 있다. 
+Jinja2 문법을 익히기 위한 기본 예제는 다음과 같다.
+
+## 4.1. Jinja2 기본 출력
+- 템플릿에서 변수 출력(`{{ variable }}`) 예제
+- app.py에서 변수 전달 및 렌더링 코드 작성
+
+## 4.2. 조건문 사용
+- 템플릿에서 `{% if %}` 조건문 예제
+- 다양한 값 전달하여 조건 분기 실습
+
+## 4.3. 반복문 사용
+- 리스트/딕셔너리 등 반복 출력 (`{% for item in items %}`) 예제
+- app.py에서 반복 데이터 전달
+
+## 4.4. 필터 활용
+- 템플릿에서 `|length`, `|upper`, `|lower` 등 기본 필터 사용 예제
+- 변수에 필터 적용하여 출력
+
+## 4.5. 템플릿 상속
+- base.html 생성, 블록 정의
+- index.html에서 상속 및 블록 오버라이드 예제
+
+## 4.6. 템플릿 내 함수/매크로
+- 간단한 매크로 정의 및 호출 예제
+- 반복되는 HTML 구조를 매크로로 처리
+
+각 단계별로 FastAPI 서버 실행 후 브라우저에서 결과를 확인하며, 변수, 조건, 반복, 필터, 상속, 매크로가 정상적으로 동작하는지 직접 실습합니다. 실습 난이도는 점진적으로 상승하며, 실무에서 자주 쓰이는 문법 위주로 선정하였습니다.
+
+# 5. 응답 모델과 오류 처리
 
 - FastAPI의 response_model 사용 가능
 - Pydantic으로 데이터 형태 보장
 - HTTPException을 활용한 에러 처리 구현 가능
 
-### 4.1. FastAPI의 응답
+### 5.1. FastAPI의 응답
 
 - FastAPI는 다양한 방식으로 응답을 반환할 수 있습니다.
 - dict, list, Pydantic 모델, HTMLResponse 등 다양한 타입 지원
@@ -108,7 +138,7 @@ def test_query_string():
 			return {"message": "안녕하세요!"}
 	```
 
-### 4.2. 응답 모델 작성
+### 5.2. 응답 모델 작성
 
 - response_model 파라미터를 사용하면 응답 데이터의 타입과 구조를 명확히 지정할 수 있습니다.
 - Pydantic 모델을 활용해 API 응답의 데이터 검증 및 문서화 가능
@@ -123,13 +153,13 @@ def test_query_string():
 			return {"message": "안녕하세요!"}
 	```
 
-### 4.3. 오류 처리 
+### 5.3. 오류 처리 
 
 - FastAPI에서는 HTTPException을 활용해 에러 응답을 쉽게 처리할 수 있습니다.
 - HTTPException 클래스는 다음 세 개의 인수를 받는다.
-    * **status_code** : 예외 처리 시 반환할 상태 코드
-    *  **detail** : 클라이언트에게 전달한 메시지
-    *  **headers** : 헤더를 요구하는 응답을 위한 선택적 인수
+	* **status_code** : 예외 처리 시 반환할 상태 코드
+	*  **detail** : 클라이언트에게 전달한 메시지
+	*  **headers** : 헤더를 요구하는 응답을 위한 선택적 인수
 - 예시:
 	```python
 	from fastapi import HTTPException

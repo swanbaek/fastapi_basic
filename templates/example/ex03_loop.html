@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반복문</title>
+    <style>
+        body{
+            padding: 3em;
+            text-align: center;
+        }
+        body *{
+            font-family: 'Arial', sans-serif;
+        }
+        .title {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title"> {{title}}</h1>
+    {% for item in items %}
+    <h3>{{item}}</h3>
+    {% endfor%}
+</body>
+</html>

@@ -66,7 +66,7 @@ def about(request: Request):
 
 @app.get("/macro", response_class=HTMLResponse)
 def jinja2_macro(request: Request):
-    return templates.TemplateResponse("macro.html", {"request": request, "fruits": ["사과", "바나나", "딸기"]})
+    return templates.TemplateResponse("ex05_macro.html", {"request": request, "fruits": ["사과", "바나나", "딸기"]})
 
 if __name__ == "__main__":
     uvicorn.run("jinja2.example_app:app", host="127.0.0.1", port=8000, reload=True)

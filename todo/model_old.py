@@ -1,6 +1,4 @@
-from typing import Optional
 from pydantic import BaseModel
-from fastapi import Form
 # pydantic을 이용하면 데이터 검증과 설정 관리를 쉽게 할 수 있다
 
 # class Item(BaseModel):
@@ -19,21 +17,8 @@ class TodoItem(BaseModel):
 
 # pydantic 모델은 중첩해서 정의 가능    
 class Todo(BaseModel):
-    id: Optional[int]
-    item: str
-
-    @classmethod
-    def as_form(
-        cls,
-        id: Optional[int] = Form(None), 
-        item: str = Form(...),
-    ):
-        '''
-        HTML Form 데이터를 받아서 Pydantic 모델(Todo) 객체로 변환해주는 클래스 메서드
-        Form(None)처럼 기본값이 있으면 선택 입력 필드
-        Form(...) : 필수 입력 필드
-        '''
-        return cls(id=id, item=item)
+    id: int
+    item: TodoItem
 
     #문서(Swagger UI)에서 보여줄 예시 데이터를 지정하는 옵션
     # FastAPI에서 Todo 모델을 쓸 때 스웨거(/docs)에서 요청/응답 예시(example)가 자동으로 보임.

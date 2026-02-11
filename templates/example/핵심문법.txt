@@ -1,5 +1,12 @@
 # Jinja2 핵심 문법 정리
 
+Jinja를 사용하려면 Jinja2 패키지를 설치하고 기존 작업 디렉터리에 template이라는 신규 폴
+더를 만들어야 한다. 이 폴더에 모든 Jinja 관련 파일(Jinja 구문이 섞여 있는 HTML 파일)이 
+저장된다. 
+
+- Jinja2와 관련된 패키지를 설치하고 templates 폴더를 만든다
+pip install jinja2 python-multipart
+
 1. 변수 출력
   {{ 변수명 }}
   예: {{ name }}
@@ -27,6 +34,10 @@
   예: {{ name|upper }}, {{ items|length }}
 
 5. 템플릿 상속
+  - Jinja의 가장 강력한 기능은 템플릿 상속이다
+  - 큰 규모 웹 애플리케이션 개발시 유용함
+  - 기본 템플릿을 정의한 다음 이 템플릿을 자식 템플릿이 상속하거나 교체해서 사용할 수 있게 한다
+
   - 부모 템플릿: block 정의
     {% block 블록명 %} ... {% endblock %}
   - 자식 템플릿: extends, block 오버라이드

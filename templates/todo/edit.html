@@ -1,0 +1,15 @@
+{% extends "todo/base.html" %}
+
+{% block todo_container %}
+<main class="container">
+    <section class="col-md-8 offset-md-2">
+        <h2>할 일 수정</h2>
+        <form action="/todos/{{ todo.id }}/edit" method="post">
+            <div class="input-group mb-3">
+                <input class="form-control" name="item" value="{{ todo.item }}" required />
+                <button class="btn btn-outline-primary" type="submit">수정 완료</button>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

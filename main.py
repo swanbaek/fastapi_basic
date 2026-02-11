@@ -14,7 +14,11 @@ app= FastAPI()
 # static 폴더 제공
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
+def get_root_html(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request, "title": "메인 페이지"})
+
+@app.get("/test")
 def read_root()->dict:
     return {"안녕?": "FASTAPI 세계!"}
 # 실행 명령어

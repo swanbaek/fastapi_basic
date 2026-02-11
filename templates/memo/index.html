@@ -6,14 +6,17 @@
     <title>memo/index.html</title>
 </head>
 <body>
-    <link rel="stylesheet" href="/static/memo/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <div class="memo-container">
         <div class="memo-title">한줄 메모장</div>
-        <form class="memo-form" action="/result" method="post">
-            <input class="memo-input" type="text" name="author" placeholder="작성자" required>
-            <input class="memo-input" type="text" name="content" placeholder="메모 내용을 입력하세요" required>
+        <form class="memo-form" id="memo-form" action="/result" method="post">
+            <input class="memo-input" type="text" name="author" id="author" placeholder="작성자" required>
+            <input class="memo-input" type="text" name="content" id="content" placeholder="메모 내용을 입력하세요" required>
             <button class="memo-button" type="submit">글쓰기</button>
         </form>
     </div>
+    <script src="/static/js/memo.js" defer></script>
+    {# defer : html파싱이 중단되지 않고 스크립트를 백그라운드에서 다운로드 한 뒤 파싱된 직후 실행하도록 만드는 속성 #}
+
 </body>
 </html>

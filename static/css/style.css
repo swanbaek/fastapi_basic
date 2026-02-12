@@ -98,6 +98,31 @@ body {
     cursor: pointer;
     transition: background 0.2s;
 }
-.delete-btn:hover {
-    background: #d32f2f;
+
+.paging {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+.page-btn {
+    padding: 6px 14px;
+    background: #f0f4ff;
+    color: #04173b;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.page-btn:hover {
+    background: #357ae8;
+    color: #fff;
+    border-color: #357ae8;
+}
+.page-btn[style*="background:#357ae8"] {
+    /* 활성 페이지 버튼 스타일 (인라인 style과 조합) */
+    background: #357ae8 !important;
+    color: #fff !important;
+    border-color: #357ae8 !important;
 }

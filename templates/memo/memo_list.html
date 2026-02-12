@@ -1,0 +1,19 @@
+{% for memo in memos %}
+<tr>
+    <td>{{ memo.id }}</td>
+    <td>{{ memo.author }}</td>
+    <td>{{ memo.content }}</td>
+    <td><button class="delete-btn" data-id="{{ memo.id }}">삭제</button></td>
+</tr>
+{% endfor %}
+
+{% if total and size %}
+<tr><td colspan="4" style="text-align:center; background:#f9f9f9;">
+    <div class="paging">
+        {% set page_count = (total // size) + (1 if total % size else 0) %}
+        {% for p in range(1, page_count+1) %}
+            <button class="page-btn" data-page="{{ p }}" {% if p == page %}style="background:#357ae8;color:#fff;"{% endif %}>{{ p }}</button>
+        {% endfor %}
+    </div>
+</td></tr>
+{% endif %}

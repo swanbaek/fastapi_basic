@@ -14,20 +14,14 @@ templates = Jinja2Templates(directory="templates")
 # GET: 메모장 폼 페이지
 @router.get("/memo", response_class=HTMLResponse)
 async def read_memo(request: Request):
-	memos = await db_oracle.select_memos_paged(1, 5)
+	memos = await db_oracle.select_memos()
 	return templates.TemplateResponse("memo/index.html", {"request": request, "memos": memos})
 
-# GET: 메모 목록 ajax (HTML fragment, 페이징)
-from fastapi import Query
-
+# GET: 메모 목록 ajax (HTML fragment)
 @router.get("/memo/list", response_class=HTMLResponse)
-async def memo_list(request: Request, page: int = Query(1), size: int = Query(5)):
-	memos = await db_oracle.select_memos_paged(page, size)
-	total = await db_oracle.count_memos()
-	return templates.TemplateResponse(
-		"memo/memo_list.html",
-		{"request": request, "memos": memos, "page": page, "size": size, "total": total}
-	)
+async def memo_list(request: Request):
+	memos = await db_oracle.select_memos()
+	return templates.TemplateResponse("memo/memo_list.html", {"request": request, "memos": memos})
 
 # POST: JSON 또는 폼 모두 지원
 @router.post("/memo")

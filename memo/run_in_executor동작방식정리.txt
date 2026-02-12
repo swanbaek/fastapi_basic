@@ -1,0 +1,82 @@
+[FastAPI 이벤트 루프] ── async 함수 실행 중
+        |
+        | run_in_executor() 호출
+        v
+[ThreadPoolExecutor의 스레드] ── 동기 DB 작업 수행
+        |
+        v
+작업 완료 후 Future 반환 → async 함수가 await로 결과 받음
+
+
+# 오라클 DB 연동을 위한 oracledb 모듈과,
+# 동기 DB 작업을 비동기로 처리하기 위한 ThreadPoolExecutor 사용.
+# oracledb는 비동기(Async) 드라이버를 지원하지 않으므로,
+# FastAPI의 이벤트 루프가 DB 작업 때문에 멈추지 않도록
+# run_in_executor()를 활용하여 별도의 스레드풀에서 실행한다.
+
+1) run_in_executor(): asyncio의 이벤트 루프가 동기(Blocking) 함수를 비동기처럼 실행할 수 있게 해주는 함수.
+    FastAPI는 비동기 기반. 근데 Oracle 드라이버 oracledb는 동기 함수만 있음. 
+    이걸 그대로 호출하면 이벤트 루프가 멈춰버림(= 전체 서버 멈춤).
+    -> 그래서 run_in_executor()로 동기 작업을 다른 스레드에서 실행시킴
+    즉 :동기 코드를 “비동기처럼” 쓰게 해주는 브릿지 역할
+
+
+2) ThreadPoolExecutor란?
+
+Python 표준 라이브러리 concurrent.futures가 제공하는 스레드 풀(여러 스레드를 미리 만들어 관리하는 객체).
+DB 같은 I/O 작업을 여러 개 동시에 처리하도록 도와주는 애.
+
+▪️ 특징
+일정 수(max_workers)의 스레드를 유지
+작업이 생기면 스레드풀 안에서 스레드가 일을 수행
+끝나면 자동으로 스레드 돌려줌(재사용)
+➜ FastAPI + 동기 DB 드라이버일 때 사실상 필수
+
+ThreadPoolExecutor (max_workers=20)
+ ├── Thread-1 : DB INSERT 실행
+ ├── Thread-2 : DB SELECT 실행
+ ├── Thread-3 : DB UPDATE 실행
+ └── ...
+동기 함수는 이 스레드들 중 하나에서 실행됨 -> FastAPI 메인 이벤트 루프는 절대 막히지 않음.
+
+ThreadPoolExecutor	동기 함수를 실행할 실제 스레드들을 가진 스레드풀
+run_in_executor()	"동기 함수를 이 스레드풀에서 비동기처럼 실행해줘"라고 요청하는 함수
+----------------------------------
+3) Connection Pool과  ThreadPoolExecutor
+
+ThreadPoolExecutor → "동기 DB 작업을 비동기 환경에서 실행시키는 스레드" 제공
+Connection Pool → "DB 접근용 커넥션"을 여러 개 제공
+둘은 협력 관계지, 서로 관련된 구조는 아님.
+
+FastAPI async endpoint
+    ↓
+run_in_executor()가 동기 함수 실행
+    ↓
+동기 함수 내부에서 커넥션 풀에서 conn 1개 가져와 쿼리 실행
+    ↓
+쿼리 끝나면 conn 반환
+    ↓
+executor의 스레드는 작업 완료 후 idle
+----------------------
+최종 결론
+1) 비동기 환경(FastAPI)에서 동기 DB 드라이버를 그대로 사용하면?
+
+동기 함수가 실행되는 동안 이벤트 루프가 멈춤
+따라서 다른 비동기 요청들이 처리되지 못함
+→ 서버가 전체적으로 느려지거나 멈추는 현상 발생
+👉 그래서 필요한 것: ThreadPoolExecutor
+
+동기 DB 작업을 이벤트 루프 밖의 별도 스레드에서 실행
+FastAPI의 비동기 흐름을 막지 않음
+비동기 환경을 안전하게 유지
+
+2) 커넥션풀(Connection Pool)은 왜 필요할까?
+
+DB 커넥션을 매번 생성/종료하면 매우 비용이 큼
+다수의 동시 요청이 있는 경우 병목 발생
+커넥션풀은 미리 커넥션을 여러 개 생성해 두고 재사용함
+→ 고성능 처리와 안정적인 DB 접근 가능
+
+한줄 요약
+**FastAPI(비동기)**에서 동기 DB 작업을 안전하게 실행하려면 ThreadPoolExecutor가 필요하고,
+동시 접속자가 많을 때 DB 연결을 효율적으로 처리하려면 커넥션풀이 필요하다.

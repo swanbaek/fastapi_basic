@@ -48,9 +48,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 })
 
-// 메모 목록 ajax로 갱신
-async function loadMemoList() {
-    const res = await fetch('/memo/list');
+// 메모 목록 ajax로 갱신 (page 파라미터 지원)
+async function loadMemoList(page=1) {
+    const res = await fetch(`/memo/list?page=${page}`);
     const html = await res.text();
     document.getElementById('memo-list-body').innerHTML = html;
+    // 페이징 버튼 이벤트 바인딩
+    document.querySelectorAll('.page-btn').forEach(btn => {
+        btn.onclick = function() {
+            loadMemoList(this.dataset.page);
+        };
+    });
 }

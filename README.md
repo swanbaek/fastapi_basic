@@ -32,7 +32,8 @@ todo/                  # Todo 앱 모듈 (app.py, model.py, test_app.py)
    ```
 3. 브라우저에서 접속
    - http://127.0.0.1:8000/docs (Swagger UI)
-   - http://127.0.0.1:8000/memo (메모장 예제)
+   - http://127.0.0.1:8000/todos (Todo 예제 : 동기방식)
+   - http://127.0.0.1:8000/memo (메모장 예제 : 비동기방식/oracle DB연동)
 
 ## 테스트
 ```bash

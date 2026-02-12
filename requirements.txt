@@ -26,3 +26,5 @@ Jinja2==3.0.3  # FastAPI/Starlette 호환성
 pytest==9.0.2
 httpx==0.28.1
 python-multipart==0.0.22
+
+oracledb==3.4.2

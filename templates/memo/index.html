@@ -14,7 +14,18 @@
             <input class="memo-input" type="text" name="content" id="content" placeholder="메모 내용을 입력하세요" required>
             <button class="memo-button" type="submit">글쓰기</button>
         </form>
-    </div>
+        <hr>
+        <div class="memo-list">
+            <table border="1" width="100%">
+                <thead>
+                    <tr><th>ID</th><th>작성자</th><th>내용</th><th>삭제</th></tr>
+                </thead>
+                <tbody id="memo-list-body">
+                    {% include 'memo/memo_list.html' %}
+                </tbody>
+            </table>
+        </div>
+    </div>    
     <script src="/static/js/memo.js" defer></script>
     {# defer : html파싱이 중단되지 않고 스크립트를 백그라운드에서 다운로드 한 뒤 파싱된 직후 실행하도록 만드는 속성 #}
 
